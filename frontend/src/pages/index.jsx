@@ -14,18 +14,10 @@ import { Responsive, WidthProvider } from "react-grid-layout";
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
 // eosio endpoint
-var debug = false;
+var jungle = true;
 var endpoint = "https://api.eosrio.io";
-// if(debug)
-//   endpoint = "http://54.186.222.85:8888";
-
-// if(window.location.host ===  "heartbeat.liquideos.com"){
-//   endpoint = "http://api.eosrio.io";
-// }
-
-// if(window.location.host === "jungle-heartbeat.liquideos.com"){
-//   endpoint = "http://dev.cryptolions.io:38888";
-// }
+if(jungle)
+  endpoint = "https://api.jungle.alohaeos.com";
 
 
 const theme = createMuiTheme({
@@ -115,7 +107,7 @@ class Index extends Component {
       
       var applink = cardData.appurl;
       if(!cardData.appurl && cardData.ipfshash){
-        applink = "https://cloudflare-ipfs.com/ipfs/" + cardData.ipfshash;
+        applink = `https://cloudflare-ipfs.com/ipfs/${cardData.ipfshash}/`;
       }
       var appname = cardData.name || contract;
         
@@ -125,6 +117,9 @@ class Index extends Component {
         return false;
       };
       
+      if(contract === "dappnetwork1" && window.location.href.indexOf(applink) === -1){
+          window.location.href = applink;
+      }
       
       return  (
       <Card className={classes.card} key={key} data-grid={{ w: 2, h: minH, x: (key * 2) % 6, y: Math.floor(key / 3)}}>
@@ -173,7 +168,7 @@ class Index extends Component {
     <Typography variant="title" color="inherit" style={{fontSize:13, color: "#fff" }}>
             Open in a new tab
           </Typography></a>
-    <iframe src={this.state.selected} style={{
+    <iframe title='content' src={this.state.selected} style={{
     height: `${height}px`,
     minHeight: "200px",
     width: "99%",
