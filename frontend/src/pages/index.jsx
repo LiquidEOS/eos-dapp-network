@@ -121,18 +121,20 @@ class Index extends Component {
         
       function onclickh(e){
         this2.setState({ selected: applink });
+        e.preventDefault();
+        return false;
       };
       
       
       return  (
       <Card className={classes.card} key={key} data-grid={{ w: 2, h: minH, x: (key * 2) % 6, y: Math.floor(key / 3)}}>
         <CardContent  style={{padding:5}}>
-        <a href="#" onClick={onclickh}>
+        <a href={applink} onClick={onclickh}>
           <Typography variant="headline" style={{fontSize:18, color: "#ddf" }} component="h2">
-            {contract}
+            {appname} 
           </Typography>
           <Typography style={{fontSize:13}} color="default" gutterBottom>
-            {appname} 
+            {contract}
           </Typography>
           </a>
             <table>
@@ -165,14 +167,19 @@ class Index extends Component {
     // }    
     let cards = hbTable.map((row, i) =>
       generateCard(i, row.contract, row.metadata));
-    
-    var theframe = (this.state.selected ? (<iframe src={this.state.selected} style={{
-    height: "100%",
-    minHeight: "600px",
+    var height = window.innerHeight * 0.85;
+    var theframe = (this.state.selected ? (<div>
+    <a href={this.state.selected} target="_blank">
+    <Typography variant="title" color="inherit" style={{fontSize:13, color: "#fff" }}>
+            Open in a new tab
+          </Typography></a>
+    <iframe src={this.state.selected} style={{
+    height: `${height}px`,
+    minHeight: "200px",
     width: "99%",
     resize: 'both',
     overflow: 'auto',
-  }} />) : (<span/>));
+  }} /></div>) : (<span/>));
 
     return (
       <MuiThemeProvider theme={theme}>
@@ -187,10 +194,7 @@ class Index extends Component {
               </div>
             </Toolbar>
           </AppBar>
-          
-          <Typography variant="title" color="inherit" style={{fontSize:9, color: "#fff", "marginLeft":"5px" }}>
-            
-          </Typography>
+        
                   {theframe}
          <ResponsiveReactGridLayout
           className="layout"
