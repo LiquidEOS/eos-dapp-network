@@ -1,6 +1,6 @@
 # eos-dapp-network
 
-## Viewer
+## Explorer
 
 https://jungle.dappnetwork.liquideos.com/
 
